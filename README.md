@@ -1,6 +1,6 @@
 # Unofficial LaTeX Beamer Template for NILU
 
-This LaTeX Beamer theme is designed for use in presentations at the Norwegian Institute for Air Research (NILU). The theme allows users to switch between two different templates (Template A and Template B) depending on their presentation needs. 
+This LaTeX Beamer theme is designed for use in presentations at the Climate and Environmental Research Institute -- NILU. The theme allows users to switch between two different templates (Template A and Template B) depending on their presentation needs. 
 
 ## Features
 - Two customizable templates: **Template A** and **Template B**.
