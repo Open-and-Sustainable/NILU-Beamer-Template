@@ -116,6 +116,9 @@ You can modify `beamerthemenilu.sty` to change the following aspects of the them
 ```latex
 \setbeamertemplate{blocks}[rounded][shadow=true]
 ```
+---
+## Author
+Riccardo Boero - ribo@nilu.no
 
-### License
-This Beamer theme is not an official NILU product. However you can extend, modify, and adapt it to your institution and the needs of your presentations.
+## License
+This template is published under the MIT License. This Beamer theme is not an official NILU product. You are free to extend, modify, and adapt it to your institution’s visual identity and the needs of your presentations.
