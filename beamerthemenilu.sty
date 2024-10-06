@@ -1,0 +1,227 @@
+% beamerthemenilu.sty
+% NILU Custom Beamer Theme with Template Switching
+% Users can switch between Template A and Template B by passing an option:
+% \usepackage[templateA]{beamerthemenilu} (default) or \usepackage[templateB]{beamerthemenilu}
+
+\ProvidesPackage{beamerthemenilu}[2024/10/05 NILU Custom Beamer Theme with Template Switching]
+
+% ============================================
+% Load required packages
+% ============================================
+\RequirePackage{tikz}                   % For drawing graphics and overlays
+\RequirePackage{url}                    % For managing URLs
+\RequirePackage[default]{sourcesanspro} % Custom font
+
+% ============================================
+% Color Definitions
+% ============================================
+\definecolor{seagreen}{rgb}{0.031, 0.251, 0.333} % Main theme color (green)
+\definecolor{azurro}{rgb}{0.624, 0.824, 0.996}   % Light blue color
+\definecolor{uau}{rgb}{0.329, 0.996, 0.859}      % Custom theme color (bright green)
+\definecolor{rusa}{rgb}{0.914, 0.235, 0.675}     % Accent color (pink)
+
+% ============================================
+% Define Options for Template A or B
+% ============================================
+\newif\iftemplateA
+\newif\iftemplateB
+
+% Parse options (templateA is default if no option is provided)
+% Parse options (templateA is default if no option is provided)
+\DeclareOption{templateA}{\templateAtrue \templateBfalse}
+\DeclareOption{templateB}{\templateBtrue \templateAfalse}
+%\ExecuteOptions{templateA} % Set Template A as the default option
+\ProcessOptions\relax
+
+\iftemplateA
+    % logo on normal frames 
+    \logo{\includegraphics[height=0.6cm]    {graphics/NILU_logo}\vspace{-0.3cm}}
+\fi
+
+\iftemplateB
+    \usetheme{Madrid}
+    \usecolortheme{default}
+    %\addtobeamertemplate{footline}{\pgfsetfillopacity{0.5}}{  \pgfsetfillopacity{1}}
+    %\setbeamertemplate{footline}{}
+    \logo{\includegraphics[height=0.8cm]{graphics/NILU_logo}\vspace{-0.2cm}}
+\fi
+
+% ============================================
+% Title Page Setup for Both Templates
+% ============================================
+\defbeamertemplate*{title page}{nilu}[1][]
+{
+    \iftemplateA
+        % Template A: Title page with image1.jpg
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[above right,inner sep=0pt] at (current page.south west)
+            {
+                \includegraphics[width=\paperwidth, height=\paperheight]{graphics/image1.jpg}
+            };
+        \end{tikzpicture}
+        \leftskip 10pt 
+        \rightskip 120pt
+        {\\
+            \usebeamerfont{title}\usebeamercolor[uau]{title}\inserttitle\par
+            \smallskip
+            \usebeamerfont{subtitle}\usebeamercolor[uau]{subtitle}\insertsubtitle\par
+            \usebeamerfont{author}\usebeamercolor[white]{author}\insertauthor\par
+            \usebeamerfont{institute}\usebeamercolor[white]{institute}\insertinstitute\par
+            \usebeamerfont{date}\usebeamercolor[white]{date}\insertdate\par
+        }
+    \else\iftemplateB
+        % Template B: Title page with ice.jpg
+        \begin{tikzpicture}[remember picture,overlay]
+            \node[above right,inner sep=0pt] at (current page.south west)
+            {
+                \includegraphics[width=\paperwidth, height=\paperheight]{graphics/ice.jpg}
+            };
+        \end{tikzpicture}
+        \includegraphics[height=1.3cm]{graphics/NILU_logo}\par
+        \bigskip
+        \pgfsetfillopacity{0.65}\begin{beamercolorbox}[wd=0.9\textwidth,sep=1em]{title}\pgfsetfillopacity{1.0}\usebeamerfont{title}\usebeamercolor[azurro]{title}\inserttitle\par
+        \usebeamerfont{subtitle}\usebeamercolor[azurro]{subtitle}\insertsubtitle\par
+        \usebeamerfont{author}\usebeamercolor[white]{author}\insertauthor\par
+        \usebeamerfont{institute}\usebeamercolor[white]{institute}\insertinstitute\par\vspace{10pt}
+        \usebeamerfont{date}\usebeamercolor[white]{date}\insertdate\par\end{beamercolorbox}
+    \fi
+    \fi
+}
+
+% ============================================
+% Font Definitions for Template A and B
+% ============================================
+\newcommand{\templateAFonts}{
+    \setbeamercolor*{structure}{bg=white,fg=seagreen}
+    \setbeamercolor{normal text}{fg=seagreen}
+    \setbeamercolor{section in toc}{bg=white,fg=seagreen}
+    \setbeamercolor{section number projected}{bg=rusa,fg=white}
+    \setbeamercolor{enumerate item}{fg=rusa}
+    \setbeamercolor{enumerate subitem}{fg=rusa}
+    \setbeamercolor{frametitle}{bg=white,fg=seagreen}
+    \setbeamercolor{framesubtitle}{bg=white,fg=rusa}
+    \setbeamercolor*{footline}{fg=seagreen}
+    
+    % Settings
+    \setbeamercolor*{title page header}{fg=white}
+    \setbeamercolor*{author}{fg=white}
+    \setbeamercolor*{date}{fg=white}
+    \setbeamerfont{title}{size=\huge\bfseries}
+    \setbeamerfont{subtitle}{size=\Large\normalfont}
+    \setbeamerfont{author}{size=\small}
+    \setbeamerfont{frametitle}{size=\LARGE\bfseries}
+    \setbeamerfont{framesubtitle}{size=\small\bfseries}
+    \setbeamercolor{frametitle}{bg=white,fg=seagreen}
+    \setbeamercolor{framesubtitle}{bg=white,fg=rusa}
+    \setbeamercolor*{footline}{fg=seagreen}
+}
+
+\newcommand{\templateBFonts}{    
+    \setbeamercolor*{structure}{bg=white,fg=seagreen}
+    \setbeamercolor{normal text}{fg=seagreen}
+    \setbeamercolor{section in toc}{bg=white,fg=seagreen}
+    \setbeamercolor{section number projected}{bg=rusa,fg=white}
+    \setbeamercolor{enumerate item}{fg=rusa}
+    \setbeamercolor{enumerate subitem}{fg=rusa}
+    \setbeamercolor{frametitle}{fg=azurro}
+    \setbeamercolor*{footline}{bg=azurro,fg=seagreen}
+    
+    % Settings
+    \setbeamercolor*{title page header}{fg=white}
+    \setbeamercolor*{author}{fg=white}
+    \setbeamercolor*{date}{fg=white}
+    %\setbeamerfont{title}{size=\LARGE\bfseries}
+    %\setbeamerfont{subtitle}{size=\normalsize\itshape}
+    %\setbeamerfont{author}{size=\footnotesize}
+    %\setbeamerfont{frametitle}{size=\large\bfseries}
+    %\setbeamerfont{framesubtitle}{size=\footnotesize\itshape}
+    \setbeamercolor{frametitle}{fg=white}
+    \setbeamercolor*{footline}{bg=azurro,fg=seagreen}
+}
+
+% Apply the fonts based on the selected template
+\iftemplateA
+  \templateAFonts
+\fi
+
+\iftemplateB
+  \templateBFonts
+\fi
+
+% ============================================
+% Footline Definition (for Template A and B)
+% ============================================
+\iftemplateA
+    % Template A: Custom footline with author, title, and page number
+    \setbeamertemplate{footline}
+    {%
+      \ifnum\c@framenumber=1
+      \else
+      \leavevmode%
+      \hbox{%
+      \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,left]{footline}
+        \hspace{30 pt} \insertframenumber{} / \inserttotalframenumber\hspace*{1ex} \hspace{20 pt}
+        \usebeamerfont{author in head/foot}\insertshortauthor, \insertshorttitle, \insertdate
+      \end{beamercolorbox}}%
+      \vskip0pt%
+        \fi%
+      \begin{beamercolorbox}[colsep=1.25pt]{lower separation line foot}
+      \end{beamercolorbox}
+    }
+\fi
+
+\iftemplateB
+    % Template B: Custom footline with author, title, and page number (right-aligned)
+    \setbeamertemplate{footline}
+    {%
+      \ifnum\c@framenumber=1
+      \else
+      \leavevmode%
+      \hbox{%
+      \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,right]{footline}
+        \usebeamerfont{author in head/foot}\insertshortauthor\hspace*{3em}
+        \usebeamerfont{title in head/foot}\insertshorttitle\hspace*{3em}
+        \insertframenumber{} / \inserttotalframenumber\hspace*{1ex}
+      \end{beamercolorbox}}%
+      \vskip0pt%
+        \fi%
+      \begin{beamercolorbox}[colsep=1.25pt]{lower separation line foot}
+      \end{beamercolorbox}
+}
+\fi
+
+% ============================================
+% Other Symbols (for Template A and B)
+% ============================================
+\iftemplateA
+    \setbeamertemplate{navigation symbols}{}
+    \setbeamertemplate{blocks}[rounded][shadow=true]  
+    \setbeamertemplate{enumerate items}[default]
+    \setbeamertemplate{sections/subsections in toc}[square]
+    \setbeamertemplate{itemize item}{\color{rusa}$\square$}
+    \setbeamertemplate{itemize subitem}{\color{rusa}$\square$}
+\fi
+
+\iftemplateB
+    \setbeamertemplate{navigation symbols}{}
+    \setbeamertemplate{blocks}[rounded][shadow=true]  
+    \setbeamertemplate{enumerate items}[default]
+    \setbeamertemplate{sections/subsections in toc}[square]
+    \setbeamertemplate{itemize item}{\color{rusa}$\square$}
+    \setbeamertemplate{itemize subitem}{\color{rusa}$\square$}
+\fi
+
+% ============================================
+% TOC at the Start of Each Section
+% ============================================
+\AtBeginSection[]{%
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+% ============================================
+% Apply custom settings for all frames
+% ============================================
+\mode<all>
