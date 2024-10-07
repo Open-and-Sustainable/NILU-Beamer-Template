@@ -34,13 +34,21 @@ jobs:
       - name: Mark directory as safe for Git
         run: git config --global --add safe.directory /__w/NILU-Beamer-Template/NILU-Beamer-Template
 
-      # Step 5: Fetch the latest changes and rebase before committing
+      # Step 5: Stash uncommitted changes (PDFs)
+      - name: Stash uncommitted changes
+        run: git stash --include-untracked
+
+      # Step 6: Fetch the latest changes and rebase
       - name: Fetch and Rebase
         run: |
           git fetch origin
           git pull --rebase origin main
 
-      # Step 6: Commit and push the PDFs back to the repository
+      # Step 7: Pop the stashed changes (restore the PDFs)
+      - name: Pop stashed changes
+        run: git stash pop
+
+      # Step 8: Commit and push the PDFs back to the repository
       - name: Commit and Push PDFs
         run: |
           git config --global user.name "GitHub Action"
