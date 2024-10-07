@@ -34,13 +34,21 @@ jobs:
           git config --global user.email "action@github.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
 
-      # Step 4: Pull the latest changes and rebase
+      # Step 4: Stash uncommitted changes (zip file)
+      - name: Stash uncommitted changes
+        run: git stash --include-untracked
+
+      # Step 5: Pull the latest changes and rebase
       - name: Pull latest changes
         run: |
           git fetch origin
           git pull --rebase origin main
 
-      # Step 5: Commit and push the zip file
+      # Step 6: Pop stashed changes (restore the zip file)
+      - name: Pop stashed changes
+        run: git stash pop
+
+      # Step 7: Commit and push the zip file
       - name: Commit zip file
         run: |
           git add NILU-Beamer-Theme.zip
@@ -48,4 +56,3 @@ jobs:
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use GitHub token to authenticate
-
