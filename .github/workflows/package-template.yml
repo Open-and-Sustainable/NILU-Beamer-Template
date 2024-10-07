@@ -34,7 +34,13 @@ jobs:
           git config --global user.email "action@github.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
 
-      # Step 4: Commit and push the zip file
+      # Step 4: Pull the latest changes and rebase
+      - name: Pull latest changes
+        run: |
+          git fetch origin
+          git pull --rebase origin main
+
+      # Step 5: Commit and push the zip file
       - name: Commit zip file
         run: |
           git add NILU-Beamer-Theme.zip
@@ -42,3 +48,4 @@ jobs:
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use GitHub token to authenticate
+
