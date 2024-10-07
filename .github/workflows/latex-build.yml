@@ -7,38 +7,36 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+    runs-on: ubuntu-latest
+
+    # Use the pre-built LaTeX Docker image
+    container:
+      image: danteev/latex:latest  # Use the pre-installed TeX Live Docker image
 
     steps:
       # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Install TeX Live (LaTeX distribution)
-      - name: Install TeX Live
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y texlive-full
-
-      # Step 3: Compile the LaTeX file for Template A
+      # Step 2: Compile the LaTeX file for Template A
       - name: Compile Template A to PDF
         run: |
-          pdflatex -interaction=nonstopmode templateA_example.tex
-          pdflatex -interaction=nonstopmode templateA_example.tex  # Twice for references
+          pdflatex -interaction=nonstopmode example_templateA.tex
+          pdflatex -interaction=nonstopmode example_templateA.tex  # Twice for references
 
-      # Step 4: Compile the LaTeX file for Template B
+      # Step 3: Compile the LaTeX file for Template B
       - name: Compile Template B to PDF
         run: |
-          pdflatex -interaction=nonstopmode templateB_example.tex
-          pdflatex -interaction=nonstopmode templateB_example.tex  # Twice for references
+          pdflatex -interaction=nonstopmode example_templateB.tex
+          pdflatex -interaction=nonstopmode example_templateB.tex  # Twice for references
 
-      # Step 5: Commit and push the PDFs back to the repository
+      # Step 4: Commit and push the PDFs back to the repository
       - name: Commit and Push PDFs
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          git add templateA_example.pdf templateB_example.pdf
+          git add example_templateA.pdf example_templateB.pdf
           git commit -m "Update PDFs on commit"
           git push
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use GitHub token for authentication
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
