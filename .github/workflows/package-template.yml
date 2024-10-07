@@ -1,0 +1,38 @@
+name: Package NILU Beamer Theme
+
+# Trigger the workflow on every push to the main branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create-zip:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Create the zip file containing the necessary files
+      - name: Create zip of theme files
+        run: |
+          mkdir package
+          cp beamerthemenilu.sty package/                # Copy .sty file
+          cp LICENSE package/                            # Copy LICENSE
+          cp -r graphics package/                        # Copy graphics directory
+          zip -r NILU-Beamer-Theme.zip package           # Zip the necessary files
+
+      # Step 3: Create a GitHub Release and upload the zip file
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "v1.0.0"  # You can update the version as needed
+          release_name: "NILU Beamer Theme v1.0.0"
+          draft: false
+          prerelease: false
+          files: NILU-Beamer-Theme.zip
+
