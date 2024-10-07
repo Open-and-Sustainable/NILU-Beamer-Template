@@ -22,7 +22,7 @@ jobs:
         run: |
           mkdir package
           cp beamerthemenilu.sty package/                # Copy .sty file
-          cp LICENSE package/                            # Copy LICENSE
+          #cp LICENSE package/                            # Do not include LICENSE at this stage
           cp -r graphics package/                        # Copy graphics directory
           cd package                                     # Move into the package directory
           zip -r ../NILU-Beamer-Theme.zip *              # Create zip file at root level
