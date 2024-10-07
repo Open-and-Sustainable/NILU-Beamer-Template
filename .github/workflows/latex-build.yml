@@ -1,0 +1,44 @@
+name: Build LaTeX PDFs
+
+on:
+  push:         # Trigger the workflow on each push to the repository
+    branches:
+      - main    # Specify the branch (e.g., 'main' or 'master')
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Install TeX Live (LaTeX distribution)
+      - name: Install TeX Live
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-full
+
+      # Step 3: Compile the LaTeX file for Template A
+      - name: Compile Template A to PDF
+        run: |
+          pdflatex -interaction=nonstopmode templateA_example.tex
+          pdflatex -interaction=nonstopmode templateA_example.tex  # Twice for references
+
+      # Step 4: Compile the LaTeX file for Template B
+      - name: Compile Template B to PDF
+        run: |
+          pdflatex -interaction=nonstopmode templateB_example.tex
+          pdflatex -interaction=nonstopmode templateB_example.tex  # Twice for references
+
+      # Step 5: Commit and push the PDFs back to the repository
+      - name: Commit and Push PDFs
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add templateA_example.pdf templateB_example.pdf
+          git commit -m "Update PDFs on commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use GitHub token for authentication
