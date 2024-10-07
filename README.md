@@ -13,9 +13,26 @@ This LaTeX Beamer theme is designed for use in presentations at the Climate and 
 
 ### Installation
 
-To use this theme, download the `beamerthemenilu.sty` file and place it in the same directory as your presentation `.tex` file. 
+To use this theme, you can follow these steps to download, unzip, and clean up the necessary files:
 
-Alternatively, you can add it to your LaTeX environment's path so that it can be accessed globally.
+1. **Download the theme zip file**:
+   ```bash
+   wget https://github.com/Open-and-Sustainable/NILU-Beamer-Template/raw/main/NILU-Beamer-Theme.zip
+   ```
+
+2. **Unzip the theme into the current directory**:
+   ```bash
+   unzip NILU-Beamer-Theme.zip -d .
+   ```
+
+3. **Clean up by removing the zip file**:
+   ```bash
+   rm NILU-Beamer-Theme.zip
+   ```
+
+After running these commands, the theme will be available for use. Make sure the *beamerthemenilu.sty* file and the *graphics/* directory are in the same directory as your presentation *.tex* file.
+
+Alternatively, you can add the theme to your LaTeX environment's path so that it can be accessed globally.
 
 ### Basic Usage
 
