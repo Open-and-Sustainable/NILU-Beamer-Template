@@ -9,9 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    # Use the pre-built LaTeX Docker image
+    # Use the pre-built LaTeX Docker image from texlive
     container:
-      image: danteev/texlive:latest  # Use the pre-installed TeX Live Docker image
+      image: texlive/texlive:latest  # Use the official texlive Docker image
 
     steps:
       # Step 1: Checkout the repository
@@ -22,15 +22,19 @@ jobs:
       - name: Compile Template A to PDF
         run: |
           pdflatex -interaction=nonstopmode example_templateA.tex
-          pdflatex -interaction=nonstopmode example_templateA.tex  # Twice for references
+          pdflatex -interaction=nonstopmode example_templateA.tex  # Run twice for cross-references
 
       # Step 3: Compile the LaTeX file for Template B
       - name: Compile Template B to PDF
         run: |
           pdflatex -interaction=nonstopmode example_templateB.tex
-          pdflatex -interaction=nonstopmode example_templateB.tex  # Twice for references
+          pdflatex -interaction=nonstopmode example_templateB.tex  # Run twice for cross-references
 
-      # Step 4: Commit and push the PDFs back to the repository
+      # Step 4: Mark the repository as safe for Git
+      - name: Mark directory as safe for Git
+        run: git config --global --add safe.directory /__w/NILU-Beamer-Template/NILU-Beamer-Template
+
+      # Step 5: Commit and push the PDFs back to the repository
       - name: Commit and Push PDFs
         run: |
           git config --global user.name "GitHub Action"
