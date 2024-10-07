@@ -30,11 +30,17 @@ jobs:
           pdflatex -interaction=nonstopmode example_templateB.tex
           pdflatex -interaction=nonstopmode example_templateB.tex  # Run twice for cross-references
 
-      # Step 4: Mark the repository as safe for Git
+      # Step 4: Mark the repository as safe for Git (required for GitHub Actions)
       - name: Mark directory as safe for Git
         run: git config --global --add safe.directory /__w/NILU-Beamer-Template/NILU-Beamer-Template
 
-      # Step 5: Commit and push the PDFs back to the repository
+      # Step 5: Fetch the latest changes and rebase before committing
+      - name: Fetch and Rebase
+        run: |
+          git fetch origin
+          git pull --rebase origin main
+
+      # Step 6: Commit and push the PDFs back to the repository
       - name: Commit and Push PDFs
         run: |
           git config --global user.name "GitHub Action"
