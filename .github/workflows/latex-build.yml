@@ -11,7 +11,7 @@ jobs:
 
     # Use the pre-built LaTeX Docker image
     container:
-      image: danteev/latex:latest  # Use the pre-installed TeX Live Docker image
+      image: danteev/texlive:latest  # Use the pre-installed TeX Live Docker image
 
     steps:
       # Step 1: Checkout the repository
