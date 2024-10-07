@@ -1,10 +1,14 @@
 name: Package NILU Beamer Theme
 
-# Trigger the workflow on every push to the main branch
+# Trigger the workflow on every push to the main branch or on tag creation
 on:
   push:
     branches:
       - main
+  # You can also trigger this workflow on tag creation
+  # or manually through the GitHub Actions UI.
+  tags:
+    - '*'
 
 jobs:
   create-zip:
@@ -22,17 +26,17 @@ jobs:
           cp beamerthemenilu.sty package/                # Copy .sty file
           cp LICENSE package/                            # Copy LICENSE
           cp -r graphics package/                        # Copy graphics directory
-          zip -r NILU-Beamer-Theme.zip package           # Zip the necessary files
+          cd package                                     # Move into the package directory
+          zip -r ../NILU-Beamer-Theme.zip *              # Create zip of package contents
 
-      # Step 3: Create a GitHub Release and upload the zip file
-      - name: Create Release
-        uses: actions/create-release@v1
+      # Step 3: Upload the custom zip file as a GitHub release asset
+      - name: Upload Zip to Release
+        uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # GitHub token to authorize the release
         with:
-          tag_name: "v1.0.0"  # You can update the version as needed
-          release_name: "NILU Beamer Theme v1.0.0"
-          draft: false
-          prerelease: false
-          files: NILU-Beamer-Theme.zip
+          upload_url: ${{ github.event.release.upload_url }}  # Automatically gets the release URL
+          asset_path: ./NILU-Beamer-Theme.zip                # Path to the zip file
+          asset_name: NILU-Beamer-Theme.zip                  # Name of the uploaded zip file
+          asset_content_type: application/zip                # Set the content type
 
